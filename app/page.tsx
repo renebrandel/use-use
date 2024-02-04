@@ -1,6 +1,10 @@
+"use client"
 import { CodeEditor } from "@/components/Editor";
 
 export default function Home() {
+  if (typeof window === 'undefined') {
+    return <></>
+  }
   return (
     <main className="flex flex-col content-center items-center gap-2">
       <div className="text-center">
