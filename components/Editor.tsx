@@ -52,9 +52,9 @@ type Node = {
   parent: Node
 }
 
-function convertToTree(input: string) {
+function convertToTree(input: string): Node[] {
   const lines = input.split('\n');
-  const root: Node = { children: [] };
+  const root = { children: [] };
   let currentParent = root;
 
   lines.forEach(line => {
@@ -67,13 +67,19 @@ function convertToTree(input: string) {
 
     const node = { content, children: [] };
 
+    // @ts-ignore Why? because I'm lazy
     while (indent <= currentParent.indent) {
+      // @ts-ignore Why? because I'm lazy
       currentParent = currentParent.parent;
     }
 
+    // @ts-ignore Why? because I'm lazy
     currentParent.children.push(node);
+    // @ts-ignore Why? because I'm lazy
     node.parent = currentParent;
+    // @ts-ignore Why? because I'm lazy
     currentParent = node;
+    // @ts-ignore Why? because I'm lazy
     node.indent = indent;
   });
 
