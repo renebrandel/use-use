@@ -23,6 +23,10 @@ export function CodeEditor() {
     return () => window.removeEventListener("resize", updateSize);
 
   }, [])
+  // Because I'm extra lazy and don't want to debug "ReferenceError: window is not defined"
+  if (!window) {
+    return <></>
+  }
   return <div className="flex flex-col w-full gap-2">
     <div className="flex gap-2 justify-center">
       <button className="p-2 border-solid-1 border-2 hover:bg-gray-800">
