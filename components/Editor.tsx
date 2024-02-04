@@ -1,20 +1,19 @@
 "use client"
 
 import { useLayoutEffect, useState } from "react"
+import { useSearchParams } from 'next/navigation'
+
 import Editor from '@monaco-editor/react';
 
 export function CodeEditor() {
-  const queryParameters = new URLSearchParams(window?.location?.search ?? "")
-  const urlString = queryParameters.get('text')
+  const searchParams = useSearchParams();
+  const urlString = searchParams.get('text')
 
   const [input, setInput] = useState(urlString ? atob(urlString) : inputString)
   const [viewOutput, setViewOutput] = useState(false)
   const [width, setWidth] = useState(768)
   const text = render(convertToTree(input), false)
   useLayoutEffect(() => {
-    if (typeof window === "undefined") {
-      return
-    }
     const updateSize = () => {
       setWidth(window.innerWidth);
     };
@@ -23,18 +22,14 @@ export function CodeEditor() {
     return () => window.removeEventListener("resize", updateSize);
 
   }, [])
-  // Because I'm extra lazy and don't want to debug "ReferenceError: window is not defined"
-  if (typeof window === "undefined") {
-    return <></>
-  }
   return <div className="flex flex-col w-full gap-2">
     <div className="flex gap-2 justify-center">
       <button className="p-2 border-solid-1 border-2 hover:bg-gray-800">
-        <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent(`There is no better way to code than using "use" for everything: https://${window.location.hostname}?text=${encodeURIComponent(btoa(input))}`)} >
+        <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent(`There is no better way to code than using "use" for everything: https://main.d3o2eeyo5g73j4.amplifyapp.com?text=${encodeURIComponent(btoa(input))}`)} >
           Share on 𝕏
         </a>
       </button>
-      <button className="p-2 border-solid-1 border-2 hover:bg-gray-800" onClick={() => setViewOutput(!viewOutput)}>{viewOutput ? 'View html code' : 'Edit \"use\" code'}</button>
+      <button className="p-2 border-solid-1 border-2 hover:bg-gray-800" onClick={() => setViewOutput(!viewOutput)}>{viewOutput ? 'View rendered HTML' : 'View HTML source'}</button>
     </div>
     <div className="grid grid-rows-3 md:grid-rows-1 grid-cols-1 md:grid-cols-2 w-full">
       <Editor
