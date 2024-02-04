@@ -12,6 +12,9 @@ export function CodeEditor() {
   const [width, setWidth] = useState(window?.innerWidth ?? 768)
   const text = render(convertToTree(input), false)
   useLayoutEffect(() => {
+    if (!window) {
+      return
+    }
     const updateSize = () => {
       setWidth(window.innerWidth);
     };
