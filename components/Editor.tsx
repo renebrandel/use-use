@@ -4,7 +4,7 @@ import { useLayoutEffect, useState } from "react"
 import Editor from '@monaco-editor/react';
 
 export function CodeEditor() {
-  const queryParameters = new URLSearchParams(window.location.search)
+  const queryParameters = new URLSearchParams(window?.location?.search ?? "")
   const urlString = queryParameters.get('text')
 
   const [input, setInput] = useState(urlString ? atob(urlString) : inputString)
