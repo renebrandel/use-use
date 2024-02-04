@@ -9,7 +9,7 @@ export function CodeEditor() {
 
   const [input, setInput] = useState(urlString ? atob(urlString) : inputString)
   const [viewOutput, setViewOutput] = useState(false)
-  const [width, setWidth] = useState(window.innerWidth)
+  const [width, setWidth] = useState(window?.innerWidth ?? 768)
   const text = render(convertToTree(input), false)
   useLayoutEffect(() => {
     const updateSize = () => {
